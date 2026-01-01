@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل جديد - EgyBook</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/auth.css">
+</head>
+<body class="register-page">
+    <div class="auth-container">
+        <!-- شريط التقدم -->
+        <div class="progress-bar">
+            <div class="progress-step active" data-step="1">𓀀</div>
+            <div class="progress-step" data-step="2">𓀙</div>
+            <div class="progress-step" data-step="3">𓀜</div>
+            <div class="progress-step" data-step="4">✓</div>
+        </div>
+
+        <!-- زر العودة -->
+        <a href="../index.html" class="back-home">
+            𓃭 العودة للصفحة الرئيسية
+        </a>
+
+        <!-- عنوان الصفحة -->
+        <div class="page-header">
+            <h1>𓋹𓂀 تسجيل حساب جديد 𓋹𓂀</h1>
+            <p>سجل الآن في EgyBook واحصل على هوية رقمية مصرية موثقة</p>
+        </div>
+
+        <!-- حاوية الرسائل -->
+        <div id="message-container"></div>
+
+        <!-- نموذج التسجيل - الخطوة 1: البيانات الشخصية -->
+        <form id="registerForm" class="multi-step-form">
+            <!-- الخطوة 1 -->
+            <div class="form-step active" data-step="1">
+                <h3 class="step-title">𓀀 الخطوة 1: البيانات الشخصية</h3>
+                
+                <div class="form-row">
+                    <!-- الاسم الأول -->
+                    <div class="form-group">
+                        <label for="firstName">
+                            <span class="label-icon">👤</span>
+                            الاسم الأول
+                        </label>
+                        <input type="text" id="firstName" name="firstName" 
+                               placeholder="أحمد" required minlength="2">
+                        <small class="form-help">اسمك كما في البطاقة</small>
+                    </div>
+
+                    <!-- اسم العائلة -->
+                    <div class="form-group">
+                        <label for="lastName">
+                            <span class="label-icon">👥</span>
+                            اسم العائلة
+                        </label>
+                        <input type="text" id="lastName" name="lastName" 
+                               placeholder="محمد" required minlength="2">
+                        <small class="form-help">اسم عائلتك</small>
+                    </div>
+                </div>
+
+                <!-- تاريخ الميلاد -->
+                <div class="form-group">
+                    <label for="birthDate">
+                        <span class="label-icon">📅</span>
+                        تاريخ الميلاد
+                    </label>
+                    <input type="date" id="birthDate" name="birthDate" required>
+                    <small class="form-help">يجب أن تكون 18 سنة أو أكثر</small>
+                </div>
+
+                <!-- المحافظة -->
+                <div class="form-group">
+                    <label for="governorate">
+                        <span class="label-icon">📍</span>
+                        المحافظة
+                    </label>
+                    <select id="governorate" name="governorate" required>
+                        <option value="">اختر محافظتك</option>
+                        <option value="القاهرة">القاهرة</option>
+                        <option value="الإسكندرية">الإسكندرية</option>
+                        <option value="بورسعيد">بورسعيد</option>
+                        <option value="السويس">السويس</option>
+                        <option value="دمياط">دمياط</option>
+                        <option value="الدقهلية">الدقهلية</option>
+                        <option value="الشرقية">الشرقية</option>
+                        <option value="القليوبية">القليوبية</option>
+                        <option value="كفر الشيخ">كفر الشيخ</option>
+                        <option value="الغربية">الغربية</option>
+                        <option value="المنوفية">المنوفية</option>
+                        <option value="البحيرة">البحيرة</option>
+                        <option value="الإسماعيلية">الإسماعيلية</option>
+                        <option value="الجيزة">الجيزة</option>
+                        <option value="بني سويف">بني سويف</option>
+                        <option value="الفيوم">الفيوم</option>
+                        <option value="المنيا">المنيا</option>
+                        <option value="أسيوط">أسيوط</option>
+                        <option value="سوهاج">سوهاج</option>
+                        <option value="قنا">قنا</option>
+                        <option value="الأقصر">الأقصر</option>
+                        <option value="أسوان">أسوان</option>
+                        <option value="البحر الأحمر">البحر الأحمر</option>
+                        <option value="الوادي الجديد">الوادي الجديد</option>
+                        <option value="مطروح">مطروح</option>
+                        <option value="شمال سيناء">شمال سيناء</option>
+                        <option value="جنوب سيناء">جنوب سيناء</option>
+                    </select>
+                    <small class="form-help">ستنضم لمجتمع هذه المحافظة فقط</small>
+                </div>
+
+                <!-- أزرار الخطوة 1 -->
+                <div class="step-buttons">
+                    <button type="button" class="btn next-step" data-next="2">
+                        التالي → الخطوة 2
+                    </button>
+                </div>
+            </div>
+
+            <!-- الخطوة 2: معلومات الاتصال -->
+            <div class="form-step" data-step="2">
+                <h3 class="step-title">𓀙 الخطوة 2: معلومات الاتصال</h3>
+
+                <!-- البريد الإلكتروني -->
+                <div class="form-group">
+                    <label for="email">
+                        <span class="label-icon">✉️</span>
+                        البريد الإلكتروني
+                    </label>
+                    <input type="email" id="email" name="email" 
+                           placeholder="example@email.com" required>
+                    <small class="form-help">سيتم إرسال رمز التحقق لهذا البريد</small>
+                </div>
+
+                <!-- تأكيد البريد -->
+                <div class="form-group">
+                    <label for="confirmEmail">
+                        <span class="label-icon">✉️✉️</span>
+                        تأكيد البريد الإلكتروني
+                    </label>
+                    <input type="email" id="confirmEmail" name="confirmEmail" 
+                           placeholder="أعد كتابة البريد" required>
+                    <small class="form-help">تأكد من كتابة نفس البريد</small>
+                </div>
+
+                <!-- رقم الهاتف -->
+                <div class="form-group">
+                    <label for="phone">
+                        <span class="label-icon">📱</span>
+                        رقم الهاتف
+                    </label>
+                    <input type="tel" id="phone" name="phone" 
+                           placeholder="01XXXXXXXXX" pattern="01[0-9]{9}" required>
+                    <small class="form-help">رقم هاتف مصري صحيح (11 رقم)</small>
+                </div>
+
+                <!-- أزرار الخطوة 2 -->
+                <div class="step-buttons">
+                    <button type="button" class="btn prev-step" data-prev="1">
+                        ← السابق
+                    </button>
+                    <button type="button" class="btn next-step" data-next="3">
+                        التالي → الخطوة 3
+                    </button>
+                </div>
+            </div>
+
+            <!-- الخطوة 3: الرقم القومي والهوية -->
+            <div class="form-step" data-step="3">
+                <h3 class="step-title">𓀜 الخطوة 3: الهوية الوطنية</h3>
+
+                <!-- الرقم القومي -->
+                <div class="form-group">
+                    <label for="nationalId">
+                        <span class="label-icon">🆔</span>
+                        الرقم القومي
+                    </label>
+                    <input type="text" id="nationalId" name="nationalId" 
+                           placeholder="12345678901234" pattern="\d{14}" 
+                           maxlength="14" required>
+                    <small class="form-help">14 رقمًا - سيشفر ولا يظهر لأحد</small>
+                    
+                    <!-- معلومات الرقم القومي -->
+                    <div class="id-info">
+                        <p><strong>معلومات من الرقم القومي:</strong></p>
+                        <div class="id-details">
+                            <span id="idBirthYear">سنة الميلاد: -</span>
+                            <span id="idGovernorate">المحافظة: -</span>
+                            <span id="idGender">النوع: -</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- صورة الهوية -->
+                <div class="form-group">
+                    <label for="idImage">
+                        <span class="label-icon">📸</span>
+                        صورة الهوية (الرقم القومي)
+                    </label>
+                    
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">📤</div>
+                        <p>اسحب وأفلت أو <span class="browse-link">تصفح</span></p>
+                        <p class="upload-hint">صورة واضحة للوجه الأمامي للهوية</p>
+                        <input type="file" id="idImage" name="idImage" 
+                               accept="image/*" required hidden>
+                    </div>
+                    
+                    <!-- معاينة الصورة -->
+                    <div class="image-preview" id="imagePreview" style="display: none;">
+                        <img id="previewImage" src="" alt="معاينة الصورة">
+                        <button type="button" class="remove-image" id="removeImage">
+                            ✕ حذف الصورة
+                        </button>
+                    </div>
+                    
+                    <small class="form-help">يجب أن تكون الصورة واضحة ومقروءة</small>
+                </div>
+
+                <!-- شروط الخصوصية -->
+                <div class="form-group">
+                    <div class="terms-box">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <span class="terms-text">
+                                أوافق على <a href="#" class="terms-link">الشروط والأحكام</a>
+                                و <a href="#" class="terms-link">سياسة الخصوصية</a>
+                            </span>
+                        </label>
+                        <p class="terms-warning">
+                            ⚠️ <strong>تنبيه:</strong> التسجيل ببيانات مزورة جريمة يعاقب عليها القانون
+                        </p>
+                    </div>
+                </div>
+
+                <!-- أزرار الخطوة 3 -->
+                <div class="step-buttons">
+                    <button type="button" class="btn prev-step" data-prev="2">
+                        ← السابق
+                    </button>
+                    <button type="button" class="btn next-step" data-next="4">
+                        التالي → الخطوة 4
+                    </button>
+                </div>
+            </div>
+
+<!-- كلمة المرور -->
+<div class="form-group">
+    <label for="password">
+        <span class="label-icon">🔒</span>
+        كلمة المرور
+    </label>
+    <input type="password" id="password" name="password" 
+           placeholder="••••••••" required minlength="6"> <!-- عدلنا لـ 6 -->
+    <div class="password-strength">
+        <div class="strength-bar"></div>
+        <span class="strength-text">قوة كلمة المرور: ضعيفة</span>
+    </div>
+</div>
+
+                <!-- ملخص البيانات -->
+                <div class="review-summary">
+                    <h4>𓋹𓂀 تأكد من بياناتك 𓋹𓂀</h4>
+                    
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <span class="summary-label">الاسم الكامل:</span>
+                            <span id="reviewName" class="summary-value">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">المحافظة:</span>
+                            <span id="reviewGov" class="summary-value">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">البريد:</span>
+                            <span id="reviewEmail" class="summary-value">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">الهاتف:</span>
+                            <span id="reviewPhone" class="summary-value">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">الرقم القومي:</span>
+                            <span id="reviewId" class="summary-value">-</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">صورة الهوية:</span>
+                            <span id="reviewImage" class="summary-value">✅ مرفوعة</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- كلمة المرور -->
+                <div class="form-group">
+                    <label for="password">
+                        <span class="label-icon">🔒</span>
+                        كلمة المرور
+                    </label>
+                    <input type="password" id="password" name="password" 
+                           placeholder••••••••" required minlength="6">
+                    <div class="password-strength">
+                        <div class="strength-bar"></div>
+                        <span class="strength-text">قوة كلمة المرور: ضعيفة</span>
+                    </div>
+                </div>
+
+                <!-- تأكيد كلمة المرور -->
+                <div class="form-group">
+                    <label for="confirmPassword">
+                        <span class="label-icon">🔒🔒</span>
+                        تأكيد كلمة المرور
+                    </label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" 
+                           placeholder="أعد كتابة كلمة المرور" required>
+                </div>
+
+                <!-- أزرار الخطوة 4 -->
+                <div class="step-buttons">
+                    <button type="button" class="btn prev-step" data-prev="3">
+                        ← السابق
+                    </button>
+                    <button type="submit" class="btn submit-final">
+                        𓋹𓂀 إنشاء الحساب 𓋹𓂀
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- روابط إضافية -->
+        <div class="auth-links">
+            <p>لديك حساب بالفعل؟ 
+                <a href="login.html">سجل الدخول هنا</a>
+            </p>
+            <p>
+                <a href="verify-national-id.html">تواجه مشكلة في الرقم القومي؟</a>
+            </p>
+        </div>
+
+        <!-- شعار الأمان -->
+        <div class="security-banner">
+            <div class="security-icon">🔒</div>
+            <div class="security-text">
+                <h4>نظام أمان مصري متكامل</h4>
+                <p>بياناتك مشفرة ومحمية وفقًا لقوانين جمهورية مصر العربية</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ملفات JavaScript -->
+    <script src="../../js/main.js"></script>
+    <script src="../../js/auth.js"></script>
+    <script src="../../js/validation.js"></script>
+    <script src="../../js/register.js"></script>
+</body>
+</html>

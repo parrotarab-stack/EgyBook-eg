@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EgyBook - شبكة التواصل المصرية</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        /* أنماط الصفحة الرئيسية */
+        .home-page {
+            background: linear-gradient(135deg, #0d2b5a 0%, #1e3a8a 100%);
+            min-height: 100vh;
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .hero-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(206,17,38,0.9) 0%, rgba(160,0,0,0.9) 100%);
+            border-bottom: 5px solid #d4af37;
+            margin-bottom: 40px;
+        }
+        
+        .hero-logo {
+            font-size: 5rem;
+            color: #d4af37;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+        
+        .main-actions {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 40px 0;
+            padding: 0 20px;
+        }
+        
+        .action-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            width: 350px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            border: 3px solid;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        
+        .action-card.user {
+            border-color: #1e3a8a;
+        }
+        
+        .action-card.admin {
+            border-color: #d4af37;
+        }
+        
+        .action-card.moderator {
+            border-color: #27ae60;
+        }
+        
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            color: #2d2424;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        .card-description {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .card-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #ce1126 0%, #a00 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+        }
+        
+        .action-card.user .card-button {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0d2b5a 100%);
+        }
+        
+        .action-card.admin .card-button {
+            background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+            color: #2d2424;
+        }
+        
+        .action-card.moderator .card-button {
+            background: linear-gradient(135deg, #27ae60 0%, #219653 100%);
+        }
+        
+        .card-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .quick-admin-section {
+            background: rgba(45,36,36,0.9);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 60px auto;
+            max-width: 1000px;
+            border: 3px solid #d4af37;
+        }
+        
+        .quick-admin-title {
+            text-align: center;
+            color: #d4af37;
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+        
+        .quick-admin-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .quick-btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .quick-btn.super-admin {
+            background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+            color: #2d2424;
+        }
+        
+        .quick-btn.cairo-mod {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0d2b5a 100%);
+            color: white;
+        }
+        
+        .quick-btn.alex-mod {
+            background: linear-gradient(135deg, #ce1126 0%, #a00 100%);
+            color: white;
+        }
+        
+        .quick-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .quick-info {
+            text-align: center;
+            margin-top: 15px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(45,36,36,0.9);
+            border-top: 3px solid #d4af37;
+            margin-top: 60px;
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            color: #d4af37;
+            margin-bottom: 15px;
+        }
+        
+        .footer-text {
+            color: rgba(255,255,255,0.8);
+            margin: 10px 0;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: #d4af37;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .main-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .action-card {
+                width: 100%;
+                max-width: 400px;
+            }
+            
+            .quick-admin-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .quick-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body class="home-page">
+    <!-- قسم البطل -->
+    <section class="hero-section">
+        <div class="hero-logo">𓂀</div>
+        <h1 class="hero-title">EgyBook</h1>
+        <p class="hero-subtitle">
+            أول شبكة تواصل اجتماعي مصرية خالصة! انضم لمجتمع محافظتك، تواصل مع أبناء بلدك، 
+            وانشر ما يهمك في بيئتك المصرية الأصيلة.
+        </p>
+    </section>
+
+    <!-- الإجراءات الرئيسية -->
+    <section class="main-actions">
+        <!-- بطاقة المستخدمين -->
+        <div class="action-card user">
+            <div class="card-icon">𓀀</div>
+            <h2 class="card-title">المستخدمون</h2>
+            <p class="card-description">
+                سجل الآن وانضم لمجتمع محافظتك. تواصل مع أبناء محافظتك، 
+                انشر أخبارك، وشارك في فعاليات مجتمعك المصري.
+            </p>
+            <a href="auth/login.html" class="card-button">
+                تسجيل الدخول / تسجيل جديد
+            </a>
+        </div>
+        
+        <!-- بطاقة المشرف العام -->
+        <div class="action-card admin">
+            <div class="card-icon">𓀋</div>
+            <h2 class="card-title">المشرف العام</h2>
+            <p class="card-description">
+                لوحة التحكم الرئيسية. أدار جميع المحافظات، 
+                تحكم في المحتوى، وراقب نشاط النظام بالكامل.
+            </p>
+            <a href="admin/login.html" class="card-button">
+                دخول المشرف العام
+            </a>
+        </div>
+        
+        <!-- بطاقة مشرفي المحافظات -->
+        <div class="action-card moderator">
+            <div class="card-icon">🏛️</div>
+            <h2 class="card-title">مشرفي المحافظات</h2>
+            <p class="card-description">
+                أدخل كمشرف لمحافظتك. أدار محتوى مجتمعك المحلي، 
+                راجع البلاغات، وحافظ على آداب المجتمع المصري.
+            </p>
+            <a href="admin/login.html?type=moderator" class="card-button">
+                دخول مشرف المحافظة
+            </a>
+        </div>
+    </section>
+
+    <!-- الدخول السريع للمشرفين -->
+    <section class="quick-admin-section">
+        <h2 class="quick-admin-title">الدخول السريع للمشرفين (للتجربة)</h2>
+        
+        <div class="quick-admin-buttons">
+            <button class="quick-btn super-admin" onclick="quickLogin('super_admin', 'admin', '123456')">
+                <span>👑</span>
+                مشرف عام سريع
+            </button>
+            
+            <button class="quick-btn cairo-mod" onclick="quickLogin('moderator', 'cairo', '123456', 'القاهرة')">
+                <span>🏛️</span>
+                مشرف القاهرة
+            </button>
+            
+            <button class="quick-btn alex-mod" onclick="quickLogin('moderator', 'alex', '123456', 'الإسكندرية')">
+                <span>🌊</span>
+                مشرف الإسكندرية
+            </button>
+        </div>
+        
+        <p class="quick-info">
+            ⚠️ هذه الأزرار للتجربة والاختبار فقط. في النسخة النهائية ستزول.
+        </p>
+    </section>
+
+    <!-- الفوتر -->
+    <footer>
+        <div class="footer-logo">𓂀</div>
+        <p class="footer-text">© 2023 EgyBook - شبكة التواصل الاجتماعي المصرية</p>
+        <p class="footer-text">جميع الحقوق محفوظة - صنع في مصر 🇪🇬</p>
+        
+        <div class="footer-links">
+            <a href="#">الشروط والأحكام</a>
+            <a href="#">سياسة الخصوصية</a>
+            <a href="#">اتصل بنا</a>
+            <a href="#">عن المشروع</a>
+        </div>
+        
+        <p class="footer-text" style="margin-top: 20px; color: #d4af37; font-weight: bold;">
+            مشروع وطني مصري 100% - برعاية المطورين المصريين
+        </p>
+    </footer>
+
+    <!-- ملف JavaScript -->
+    <script>
+        // نظام الدخول السريع
+        function quickLogin(role, username, password, governorate = '') {
+            console.log(`الدخول السريع كـ ${role}: ${username}`);
+            
+            let adminData;
+            
+            if (role === 'super_admin') {
+                adminData = {
+                    id: 1,
+                    username: username,
+                    password: password,
+                    name: 'المشرف العام',
+                    role: 'super_admin',
+                    permissions: ['all'],
+                    createdAt: new Date().toISOString(),
+                    lastLogin: new Date().toISOString()
+                };
+            } else {
+                adminData = {
+                    id: Date.now(),
+                    username: username,
+                    password: password,
+                    name: `مشرف ${governorate}`,
+                    role: 'moderator',
+                    governorate: governorate,
+                    permissions: ['manage_posts', 'manage_users', 'view_reports'],
+                    createdAt: new Date().toISOString(),
+                    lastLogin: new Date().toISOString()
+                };
+            }
+            
+            // حفظ في النظام
+            const systemData = JSON.parse(localStorage.getItem('egybook_system') || '{}');
+            if (!systemData.admins) {
+                systemData.admins = [];
+            }
+            
+            // تحديث أو إضافة
+            const adminIndex = systemData.admins.findIndex(a => 
+                a.role === role && 
+                (role === 'moderator' ? a.governorate === governorate : true)
+            );
+            
+            if (adminIndex !== -1) {
+                systemData.admins[adminIndex] = adminData;
+            } else {
+                systemData.admins.push(adminData);
+            }
+            
+            localStorage.setItem('egybook_system', JSON.stringify(systemData));
+            
+            // حفظ المشرف الحالي
+            localStorage.setItem('current_admin', JSON.stringify(adminData));
+            
+            // رسالة تأكيد
+            alert(`✅ تم الدخول بنجاح كـ ${adminData.name}!\nجاري التوجيه للوحة التحكم...`);
+            
+            // توجيه للوحة التحكم المناسبة
+            if (role === 'super_admin') {
+                window.location.href = 'admin/dashboard.html';
+            } else {
+                window.location.href = 'admin/moderator-dashboard.html';
+            }
+        }
+        
+        // تهيئة النظام عند التحميل
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('𓂀 تحميل الصفحة الرئيسية...');
+            
+            // التحقق من وجود مستخدم مسجل
+            const currentUser = localStorage.getItem('current_user');
+            const currentAdmin = localStorage.getItem('current_admin');
+            
+            if (currentUser) {
+                console.log('مستخدم مسجل مسبقًا');
+                // يمكن إضافة توجيه تلقائي هنا إذا أردت
+            }
+            
+            if (currentAdmin) {
+                console.log('مشرف مسجل مسبقًا');
+                // يمكن إضافة توجيه تلقائي هنا إذا أردت
+            }
+        });
+    </script>
+</body>
+</html>

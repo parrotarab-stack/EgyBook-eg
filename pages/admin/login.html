@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دخول المشرفين - EgyBook</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+        /* أنماط دخول المشرفين */
+        .admin-login-page {
+            background: linear-gradient(135deg, #0c0c0c 0%, #2d2424 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .admin-login-container {
+            width: 100%;
+            max-width: 450px;
+        }
+        
+        .admin-login-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2424 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            border: 4px solid #d4af37;
+            position: relative;
+        }
+        
+        .admin-login-header {
+            background: linear-gradient(135deg, #ce1126 0%, #a00 100%);
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            border-bottom: 3px solid #d4af37;
+        }
+        
+        .admin-login-header:before {
+            content: '𓀋';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-size: 2.5rem;
+            color: #d4af37;
+        }
+        
+        .admin-login-header:after {
+            content: '𓀋';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2.5rem;
+            color: #d4af37;
+        }
+        
+        .admin-logo {
+            font-size: 4rem;
+            color: #d4af37;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .admin-title {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .admin-subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+        
+        .admin-login-body {
+            padding: 40px 30px;
+        }
+        
+        .admin-type-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 15px;
+        }
+        
+        .admin-type-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: transparent;
+            color: rgba(255,255,255,0.7);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+        
+        .admin-type-btn.active {
+            background: #d4af37;
+            color: #2d2424;
+        }
+        
+        .admin-login-form {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .admin-login-form.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            color: #d4af37;
+            font-weight: bold;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 18px 20px;
+            border: 2px solid rgba(212,175,55,0.3);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .form-input:focus {
+            border-color: #d4af37;
+            background: rgba(255,255,255,0.15);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(212,175,55,0.2);
+        }
+        
+        .form-input::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+        
+        .admin-login-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #0d2b5a 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            border: 2px solid #d4af37;
+        }
+        
+        .admin-login-btn:hover {
+            background: linear-gradient(135deg, #0d2b5a 0%, #1e3a8a 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(30,58,138,0.4);
+        }
+        
+        .btn-icon {
+            font-size: 1.8rem;
+        }
+        
+        .admin-login-footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .back-to-home {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 25px;
+            background: rgba(255,255,255,0.1);
+            color: #d4af37;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(212,175,55,0.3);
+        }
+        
+        .back-to-home:hover {
+            background: rgba(212,175,55,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .security-note {
+            background: rgba(206,17,38,0.1);
+            border: 1px solid rgba(206,17,38,0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            color: rgba(255,255,255,0.9);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        .security-note strong {
+            color: #d4af37;
+        }
+        
+        /* رسائل */
+        #adminMessageContainer {
+            margin-bottom: 20px;
+        }
+        
+        .admin-message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .admin-message.success {
+            background: rgba(39,174,96,0.2);
+            color: #27ae60;
+            border: 1px solid rgba(39,174,96,0.3);
+        }
+        
+        .admin-message.error {
+            background: rgba(206,17,38,0.2);
+            color: #ce1126;
+            border: 1px solid rgba(206,17,38,0.3);
+        }
+        
+        .admin-message.info {
+            background: rgba(30,58,138,0.2);
+            color: #1e3a8a;
+            border: 1px solid rgba(30,58,138,0.3);
+        }
+        
+        .admin-message button {
+            background: none;
+            border: none;
+            color: inherit;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-login-container {
+                max-width: 100%;
+            }
+            
+            .admin-login-header {
+                padding: 30px 20px;
+            }
+            
+            .admin-login-body {
+                padding: 30px 20px;
+            }
+            
+            .admin-title {
+                font-size: 2rem;
+            }
+            
+            .admin-type-selector {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body class="admin-login-page">
+    <div class="admin-login-container">
+        <!-- بطاقة الدخول -->
+        <div class="admin-login-card">
+            <!-- الهيدر -->
+            <div class="admin-login-header">
+                <div class="admin-logo">𓀋</div>
+                <h1 class="admin-title">لوحة التحكم</h1>
+                <p class="admin-subtitle">EgyBook - النظام الإداري</p>
+            </div>
+            
+            <!-- جسم البطاقة -->
+            <div class="admin-login-body">
+                <!-- اختيار نوع المشرف -->
+                <div class="admin-type-selector">
+                    <button class="admin-type-btn active" data-type="admin">
+                        المشرف العام
+                    </button>
+                    <button class="admin-type-btn" data-type="moderator">
+                        مشرف المحافظة
+                    </button>
+                </div>
+                
+                <!-- حاوية الرسائل -->
+                <div id="adminMessageContainer"></div>
+                
+                <!-- تحذير أمني -->
+                <div class="security-note">
+                    <strong>⚠️ تحذير أمني:</strong> هذه الصفحة مخصصة للمشرفين المعتمدين فقط.
+                </div>
+                
+                <!-- نموذج المشرف العام -->
+                <form id="adminLoginForm" class="admin-login-form active">
+                    <div class="form-group">
+                        <label class="form-label">
+                            <span>👑</span>
+                            اسم المستخدم الإداري
+                        </label>
+                        <input 
+                            type="text" 
+                            class="form-input" 
+                            id="adminUsername" 
+                            placeholder="admin_user"
+                            required
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">
+                            <span>🔑</span>
+                            كلمة المرور الإدارية
+                        </label>
+                        <input 
+                            type="password" 
+                            class="form-input" 
+                            id="adminPassword" 
+                            placeholder="••••••••"
+                            required
+                            minlength="6"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">
+                            <span>🔄</span>
+                            رمز التحقق الإداري
+                        </label>
+                        <input 
+                            type="text" 
+                            class="form-input" 
+                            id="adminCode" 
+                            placeholder="123456"
+                            required
+                            maxlength="6"
+                        >
+                    </div>
+                    
+                    <button type="submit" class="admin-login-btn">
+                        <span class="btn-icon">𓀋</span>
+                        دخول المشرف العام
+                    </button>
+                </form>
+                
+                <!-- نموذج مشرف المحافظة -->
+                <form id="moderatorLoginForm" class="admin-login-form">
+                    <div class="form-group">
+                        <label class="form-label">
+                            <span>🏛️</span>
+                            المحافظة
+                        </label>
+                        <select class="form-input" id="moderatorGovernorate" required>
+                            <option value="">اختر المحافظة</option>
+                            <option value="القاهرة">القاهرة</option>
+                            <option value="الإسكندرية">الإسكندرية</option>
+                            <option value="بورسعيد">بورسعيد</option>
+                            <option value="السويس">السويس</option>
+                            <option value="دمياط">دمياط</option>
+                            <option value="الدقهلية">الدقهلية</option>
+                            <option value="الشرقية">الشرقية</option>
+                            <option value="القليوبية">القليوبية</option>
+                            <option value="كفر الشيخ">كفر الشيخ</option>
+                            <option value="الغربية">الغربية</option>
+                            <option value="المنوفية">المنوفية</option>
+                            <option value="البحيرة">البحيرة</option>
+                            <option value="الإسماعيلية">الإسماعيلية</option>
+                            <option value="الجيزة">الجيزة</option>
+                            <option value="بني سويف">بني سويف</option>
+                            <option value="الفيوم">الفيوم</option>
+                            <option value="المنيا">المنيا</option>
+                            <option value="أسيوط">أسيوط</option>
+                            <option value="سوهاج">سوهاج</option>
+                            <option value="قنا">قنا</option>
+                            <option value="الأقصر">الأقصر</option>
+                            <option value="أسوان">أسوان</option>
+                            <option value="البحر الأحمر">البحر الأحمر</option>
+                            <option value="الوادي الجديد">الوادي الجديد</option>
+                            <option value="مطروح">مطروح</option>
+                            <option value="شمال سيناء">شمال سيناء</option>
+                            <option value="جنوب سيناء">جنوب سيناء</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">
+                            <span>👤</span>
+                            اسم مشرف المحافظة
+                        </label>
+                        <input 
+                            type="text" 
+                            class="form-input" 
+                            id="moderatorUsername" 
+                            placeholder="moderator_user"
+                            required
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">
+                            <span>🔒</span>
+                            كلمة مرور المشرف
+                        </label>
+                        <input 
+                            type="password" 
+                            class="form-input" 
+                            id="moderatorPassword" 
+                            placeholder="••••••••"
+                            required
+                            minlength="6"
+                        >
+                    </div>
+                    
+                    <button type="submit" class="admin-login-btn">
+                        <span class="btn-icon">🏛️</span>
+                        دخول مشرف المحافظة
+                    </button>
+                </form>
+                
+                <!-- فوتر -->
+                <div class="admin-login-footer">
+                    <p>© 2023 EgyBook - النظام الإداري</p>
+                    <p>جميع الإجراءات مسجلة ومراقبة</p>
+                    <a href="../../index.html" class="back-to-home">
+                        🏠 العودة للصفحة الرئيسية
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ملف JavaScript -->
+    <script>
+        // نظام دخول المشرفين
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('👑 تحميل نظام دخول المشرفين...');
+            
+            // تهيئة المشرفين إذا لم يكونوا موجودين
+            initializeAdmins();
+            
+            // اختيار نوع المشرف
+            const typeButtons = document.querySelectorAll('.admin-type-btn');
+            const loginForms = document.querySelectorAll('.admin-login-form');
+            
+            typeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const type = this.dataset.type;
+                    
+                    // تحديث الأزرار النشطة
+                    typeButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // إظهار النموذج المناسب
+                    loginForms.forEach(form => form.classList.remove('active'));
+                    document.getElementById(`${type}LoginForm`).classList.add('active');
+                });
+            });
+            
+            // نموذج المشرف العام
+            document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                adminLogin();
+            });
+            
+            // نموذج مشرف المحافظة
+            document.getElementById('moderatorLoginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                moderatorLogin();
+            });
+            
+            // التحقق من نوع الدخول من URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const type = urlParams.get('type');
+            if (type === 'moderator') {
+                // إظهار نموذج مشرف المحافظة
+                document.querySelector('.admin-type-btn[data-type="admin"]').classList.remove('active');
+                document.querySelector('.admin-type-btn[data-type="moderator"]').classList.add('active');
+                document.getElementById('adminLoginForm').classList.remove('active');
+                document.getElementById('moderatorLoginForm').classList.add('active');
+            }
+        });
+        
+        // تهيئة المشرفين
+        function initializeAdmins() {
+            const systemData = JSON.parse(localStorage.getItem('egybook_system') || '{}');
+            
+            if (!systemData.admins) {
+                // المشرف العام الافتراضي
+                const superAdmin = {
+                    id: 1,
+                    username: 'admin',
+                    password: '123456',
+                    name: 'المشرف العام',
+                    role: 'super_admin',
+                    permissions: ['all'],
+                    createdAt: new Date().toISOString(),
+                    lastLogin: null
+                };
+                
+                systemData.admins = [superAdmin];
+                localStorage.setItem('egybook_system', JSON.stringify(systemData));
+                
+                console.log('✅ تم تهيئة المشرفين الافتراضيين');
+            }
+        }
+        
+        // عرض رسالة
+        function showAdminMessage(text, type) {
+            const container = document.getElementById('adminMessageContainer');
+            
+            // تنظيف الرسائل القديمة
+            container.innerHTML = '';
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `admin-message ${type}`;
+            messageDiv.innerHTML = `
+                <p>${text}</p>
+                <button onclick="this.parentElement.remove()">✕</button>
+            `;
+            
+            container.appendChild(messageDiv);
+            
+            // إزالة الرسالة بعد 5 ثوان
+            setTimeout(() => {
+                if (messageDiv.parentElement) {
+                    messageDiv.remove();
+                }
+            }, 5000);
+        }
+        
+        // دخول المشرف العام - النسخة المعدلة
+        function adminLogin() {
+            const username = document.getElementById('adminUsername').value.trim();
+            const password = document.getElementById('adminPassword').value.trim();
+            const code = document.getElementById('adminCode').value.trim();
+            
+            // التحقق من البيانات
+            if (!username || !password || !code) {
+                showAdminMessage('يرجى ملء جميع الحقول', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showAdminMessage('كلمة المرور يجب أن تكون 6 أحرف على الأقل', 'error');
+                return;
+            }
+            
+            // قبول أي رمز تحقق للتجربة
+            if (code !== '123456') {
+                showAdminMessage('رمز التحقق يجب أن يكون 123456 للتجربة', 'error');
+                return;
+            }
+            
+            // جلب المشرفين
+            const systemData = JSON.parse(localStorage.getItem('egybook_system') || '{}');
+            const admins = systemData.admins || [];
+            
+            // البحث عن المشرف العام
+            let admin = admins.find(a => 
+                a.username === username && 
+                a.password === password && 
+                a.role === 'super_admin'
+            );
+            
+            if (admin) {
+                // دخول ناجح
+                successAdminLogin(admin, systemData);
+            } else {
+                // إنشاء مشرف جديد تلقائيًا
+                console.log('المشرف غير موجود، جاري إنشاء مشرف جديد...');
+                createNewAdmin(username, password);
+            }
+        }
+        
+        // إنشاء مشرف جديد
+        function createNewAdmin(username, password) {
+            const newAdmin = {
+                id: Date.now(),
+                username: username,
+                password: password,
+                name: 'المشرف العام',
+                role: 'super_admin',
+                permissions: ['all'],
+                createdAt: new Date().toISOString(),
+                lastLogin: new Date().toISOString()
+            };
+            
+            const systemData = JSON.parse(localStorage.getItem('egybook_system') || '{}');
+            
+            if (!systemData.admins) {
+                systemData.admins = [];
+            }
+            
+            systemData.admins.push(newAdmin);
+            localStorage.setItem('egybook_system', JSON.stringify(systemData));
+            
+            // حفظ المشرف الحالي
+            localStorage.setItem('current_admin', JSON.stringify(newAdmin));
+            
+            showAdminMessage('✅ تم إنشاء حساب المشرف بنجاح! جاري التوجيه...', 'success');
+            
+            // توجيه للوحة التحكم
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 2000);
+        }
+        
+        // دخول ناجح للمشرف العام
+        function successAdminLogin(admin, systemData) {
+            // تحديث آخر دخول
+            admin.lastLogin = new Date().toISOString();
+            localStorage.setItem('egybook_system', JSON.stringify(systemData));
+            
+            // حفظ المشرف الحالي
+            localStorage.setItem('current_admin', JSON.stringify(admin));
+            
+            showAdminMessage('✅ تم الدخول بنجاح! جاري التوجيه...', 'success');
+            
+            // توجيه للوحة التحكم
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 2000);
+        }
+        
+        // دخول مشرف المحافظة - النسخة المعدلة
+        function moderatorLogin() {
+            const governorate = document.getElementById('moderatorGovernorate').value;
+            const username = document.getElementById('moderatorUsername').value.trim();
+            const password = document.getElementById('moderatorPassword').value.trim();
+            
+            // التحقق من البيانات
+            if (!governorate || !username || !password) {
+                showAdminMessage('يرجى ملء جميع الحقول', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showAdminMessage('كلمة المرور يجب أن تكون 6 أحرف على الأقل', 'error');
+                return;
+            }
+            
+            // جلب المشرفين
+            const systemData = JSON.parse(localStorage.getItem('egybook_system') || '{}');
+            const admins = systemData.admins || [];
+            
+            // البحث عن مشرف المحافظة
+            let moderator = admins.find(a => 
+                a.username === username && 
+                a.password === password && 
+                a.role === 'moderator' &&
+                a.governorate === governorate
+            );
+            
+            if (moderator) {
+                // دخول ناجح
+                successModeratorLogin(moderator, systemData);
+            } else {
+                // إنشاء مشرف محافظة جديد
+                console.log('مشرف المحافظة غير موجود، جاري إنشاء مشرف جديد...');
+                createNewModerator(username, password, governorate);
+            }
+        }
+        
+        // إنشاء مشرف محافظة جديد
+        function createNewModerator(username, password, governorate) {
+            const newModerator = {
+                id: Date.now(),
+                username: username,
+                password: password,
+                name: `مشرف ${governorate}`,
+                role: 'moderator',
+                governorate: governorate,
+                permissions: ['manage_posts', 'manage_users', 'view_reports'],
+                createdAt: new Date().toISOString(),
+                lastLogin: new Date().toISOString()
+            };
+            
+            const systemData = JSON.parse(localStorage.getItem('egybook_system') || '{}');
+            
+            if (!systemData.admins) {
+                systemData.admins = [];
+            }
+            
+            systemData.admins.push(newModerator);
+            localStorage.setItem('egybook_system', JSON.stringify(systemData));
+            
+            // حفظ المشرف الحالي
+            localStorage.setItem('current_admin', JSON.stringify(newModerator));
+            
+            showAdminMessage(`✅ تم إنشاء مشرف ${governorate} بنجاح! جاري التوجيه...`, 'success');
+            
+            // توجيه للوحة التحكم
+            setTimeout(() => {
+                window.location.href = 'moderator-dashboard.html';
+            }, 2000);
+        }
+        
+        // دخول ناجح لمشرف المحافظة
+        function successModeratorLogin(moderator, systemData) {
+            // تحديث آخر دخول
+            moderator.lastLogin = new Date().toISOString();
+            localStorage.setItem('egybook_system', JSON.stringify(systemData));
+            
+            // حفظ المشرف الحالي
+            localStorage.setItem('current_admin', JSON.stringify(moderator));
+            
+            showAdminMessage('✅ تم الدخول بنجاح! جاري التوجيه...', 'success');
+            
+            // توجيه للوحة التحكم
+            setTimeout(() => {
+                window.location.href = 'moderator-dashboard.html';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

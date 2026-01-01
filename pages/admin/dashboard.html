@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - المشرف العام - EgyBook</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <style>
+        /* أنماط لوحة التحكم */
+        .admin-dashboard {
+            min-height: 100vh;
+            background: #0c0c0c;
+            color: #e0e0e0;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        /* الهيدر */
+        .admin-header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2424 100%);
+            padding: 20px 30px;
+            border-bottom: 3px solid #d4af37;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .admin-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .admin-logo h1 {
+            font-size: 2.2rem;
+            color: #d4af37;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+        
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .admin-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2d2424;
+        }
+        
+        .admin-details h3 {
+            margin: 0;
+            color: #d4af37;
+            font-size: 1.2rem;
+        }
+        
+        .admin-details p {
+            margin: 5px 0 0 0;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        .admin-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .header-btn {
+            padding: 10px 20px;
+            border: 1px solid rgba(212,175,55,0.3);
+            background: rgba(255,255,255,0.1);
+            color: #d4af37;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .header-btn:hover {
+            background: rgba(212,175,55,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .header-btn.logout {
+            background: rgba(206,17,38,0.2);
+            border-color: rgba(206,17,38,0.3);
+            color: #ce1126;
+        }
+        
+        .header-btn.logout:hover {
+            background: rgba(206,17,38,0.3);
+        }
+        
+        /* المحتوى الرئيسي */
+        .admin-container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 25px;
+        }
+        
+        /* الشريط الجانبي */
+        .admin-sidebar {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2424 100%);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid rgba(212,175,55,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .sidebar-title {
+            color: #d4af37;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(212,175,55,0.3);
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .admin-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .admin-nav li {
+            margin-bottom: 10px;
+        }
+        
+        .admin-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            color: #999;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .admin-nav a:hover, .admin-nav a.active {
+            background: rgba(30,58,138,0.2);
+            color: white;
+            border-color: rgba(30,58,138,0.5);
+            transform: translateX(-5px);
+        }
+        
+        .nav-icon {
+            font-size: 1.2rem;
+            width: 25px;
+            text-align: center;
+        }
+        
+        /* لوحة الإحصائيات */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2424 100%);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid rgba(212,175,55,0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: #d4af37;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+        
+        .stat-card.users {
+            border-color: rgba(30,58,138,0.5);
+        }
+        
+        .stat-card.posts {
+            border-color: rgba(206,17,38,0.5);
+        }
+        
+        .stat-card.revenue {
+            border-color: rgba(39,174,96,0.5);
+        }
+        
+        .stat-card.communities {
+            border-color: rgba(142,68,173,0.5);
+        }
+        
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .stat-icon {
+            font-size: 2.5rem;
+            opacity: 0.8;
+        }
+        
+        .stat-title {
+            color: #999;
+            font-size: 1rem;
+            margin: 0;
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            margin: 10px 0;
+        }
+        
+        .stat-change {
+            font-size: 0.9rem;
+            padding: 5px 10px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        .stat-change.positive {
+            background: rgba(39,174,96,0.2);
+            color: #27ae60;
+        }
+        
+        .stat-change.negative {
+            background: rgba(206,17,38,0.2);
+            color: #ce1126;
+        }
+        
+        /* المخططات */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .chart-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2424 100%);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid rgba(212,175,55,0.3);
+        }
+        
+        .chart-header {
+            margin-bottom: 20px;
+        }
+        
+        .chart-title {
+            color: #d4af37;
+            margin: 0 0 10px 0;
+            font-size: 1.3rem;
+        }
+        
+        .chart-description {
+            color: #999;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        
+        .chart-placeholder {
+            height: 200px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 1.1rem;
+            border: 1px dashed rgba(255,255,255,0.1);
+        }
+        
+        /* الجداول */
+        .tables-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .table-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2424 100%);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid rgba(212,175,55,0.3);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .table-title {
+            color: #d4af37;
+            margin: 0;
+            font-size: 1.3rem;
+        }
+        
+        .table-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .table-btn {
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .table-btn:hover {
+            background: rgba(30,58,138,0.5);
+            border-color: #1e3a8a;
+        }
+        
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .admin-table th {
+            background: rgba(30,58,138,0.3);
+            color: #d4af37;
+            padding: 15px;
+            text-align: right;
+            border-bottom: 2px solid rgba(212,175,55,0.3);
+            font-weight: bold;
+        }
+        
+        .admin-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            color: #ccc;
+        }
+        
+        .admin-table tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #1e3a8a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        
+        .status-active {
+            background: rgba(39,174,96,0.2);
+            color: #27ae60;
+        }
+        
+        .status-pending {
+            background: rgba(241,196,15,0.2);
+            color: #f1c40f;
+        }
+        
+        .status-banned {
+            background: rgba(206,17,38,0.2);
+            color: #ce1126;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+        
+        .action-btn.view {
+            background: rgba(30,58,138,0.3);
+            color: white;
+        }
+        
+        .action-btn.edit {
+            background: rgba(212,175,55,0.3);
+            color: #d4af37;
+        }
+        
+        .action-btn.delete {
+            background: rgba(206,17,38,0.3);
+            color: #ce1126;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+        
+        /* الفوتر */
+        .admin-footer {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2424 100%);
+            border-top: 3px solid rgba(212,175,55,0.3);
+            margin-top: 40px;
+            color: #999;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 15px 0;
+        }
+        
+        .footer-links a {
+            color: #d4af37;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        
+        /* التجاوب */
+        @media (max-width: 1200px) {
+            .admin-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-sidebar {
+                position: static;
+                margin-bottom: 20px;
+            }
+            
+            .charts-grid,
+            .tables-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .admin-header {
+                padding: 15px 20px;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .admin-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body class="admin-dashboard">
+    <!-- الهيدر -->
+    <header class="admin-header">
+        <div class="header-content">
+            <div class="admin-logo">
+                <h1>𓀋 لوحة التحكم - المشرف العام</h1>
+                <span style="color: #999;">EgyBook - النظام الإداري الرئيسي</span>
+            </div>
+            
+            <div class="admin-info">
+                <div class="admin-profile">
+                    <div class="admin-avatar" id="adminAvatar">👑</div>
+                    <div class="admin-details">
+                        <h3 id="adminName">المشرف العام</h3>
+                        <p>Super Admin - جميع الصلاحيات</p>
+                    </div>
+                </div>
+                
+<div class="admin-actions">
+    <button class="header-btn" id="refreshBtn">
+        <span>🔄</span>
+        تحديث
+    </button>
+    <!-- أضف هذا الزر الجديد -->
+    <button class="header-btn" onclick="window.location.href='change-password.html'">
+        <span>🔐</span>
+        تغيير الباسورد
+    </button>
+    <button class="header-btn logout" id="logoutBtn">
+        <span>🚪</span>
+        تسجيل الخروج
+    </button>
+</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="admin-container">
+        <!-- الشريط الجانبي -->
+        <aside class="admin-sidebar">
+            <h3 class="sidebar-title">
+                <span>📊</span>
+                القائمة الرئيسية
+            </h3>
+            
+            <nav class="admin-nav">
+                <ul>
+                    <li><a href="#dashboard" class="active" data-section="dashboard">
+                        <span class="nav-icon">🏠</span>
+                        <span>لوحة التحكم</span>
+                    </a></li>
+                    
+                    <li><a href="#users" data-section="users">
+                        <span class="nav-icon">👥</span>
+                        <span>المستخدمين</span>
+                        <span class="badge" id="usersBadge">0</span>
+                    </a></li>
+                    
+                    <li><a href="#posts" data-section="posts">
+                        <span class="nav-icon">📝</span>
+                        <span>المنشورات</span>
+                        <span class="badge" id="postsBadge">0</span>
+                    </a></li>
+                    
+                    <li><a href="#reports" data-section="reports">
+                        <span class="nav-icon">🚨</span>
+                        <span>البلاغات</span>
+                        <span class="badge" id="reportsBadge">0</span>
+                    </a></li>
+                    
+                    <li><a href="#communities" data-section="communities">
+                        <span class="nav-icon">🏛️</span>
+                        <span>المجتمعات</span>
+                        <span class="badge">27</span>
+                    </a></li>
+                    
+                    <li><a href="#ads" data-section="ads">
+                        <span class="nav-icon">💰</span>
+                        <span>الإعلانات</span>
+                        <span class="badge" id="adsBadge">0</span>
+                    </a></li>
+                    
+                    <li><a href="#finance" data-section="finance">
+                        <span class="nav-icon">💳</span>
+                        <span>المالية</span>
+                        <span class="badge" id="revenueBadge">0</span>
+                    </a></li>
+                    
+                    <li><a href="#moderation" data-section="moderation">
+                        <span class="nav-icon">🛡️</span>
+                        <span>المراقبة</span>
+                    </a></li>
+                    
+                    <li><a href="#analytics" data-section="analytics">
+                        <span class="nav-icon">📈</span>
+                        <span>التحليلات</span>
+                    </a></li>
+                    
+                    <li><a href="#system" data-section="system">
+                        <span class="nav-icon">⚙️</span>
+                        <span>إعدادات النظام</span>
+                    </a></li>
+                </ul>
+            </nav>
+            
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <h4 style="color: #d4af37; margin-bottom: 15px;">إحصائيات سريعة</h4>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: #999;">المستخدمون النشطون:</span>
+                        <span style="color: white;" id="sidebarActiveUsers">0</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: #999;">منشورات اليوم:</span>
+                        <span style="color: white;" id="sidebarTodayPosts">0</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: #999;">الإيرادات اليوم:</span>
+                        <span style="color: #27ae60;" id="sidebarTodayRevenue">0 EGP</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: #999;">المشرفون النشطون:</span>
+                        <span style="color: white;" id="sidebarActiveAdmins">0</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- المحتوى المركزي -->
+        <main class="admin-main">
+            <!-- الإحصائيات -->
+            <div class="stats-grid">
+                <div class="stat-card users">
+                    <div class="stat-header">
+                        <h3 class="stat-title">إجمالي المستخدمين</h3>
+                        <span class="stat-icon">👥</span>
+                    </div>
+                    <div class="stat-value" id="totalUsers">0</div>
+                    <div class="stat-change positive" id="usersChange">+0%</div>
+                </div>
+                
+                <div class="stat-card posts">
+                    <div class="stat-header">
+                        <h3 class="stat-title">إجمالي المنشورات</h3>
+                        <span class="stat-icon">📝</span>
+                    </div>
+                    <div class="stat-value" id="totalPosts">0</div>
+                    <div class="stat-change positive" id="postsChange">+0%</div>
+                </div>
+                
+                <div class="stat-card revenue">
+                    <div class="stat-header">
+                        <h3 class="stat-title">الإيرادات الكلية</h3>
+                        <span class="stat-icon">💰</span>
+                    </div>
+                    <div class="stat-value" id="totalRevenue">0 EGP</div>
+                    <div class="stat-change positive" id="revenueChange">+0%</div>
+                </div>
+                
+                <div class="stat-card communities">
+                    <div class="stat-header">
+                        <h3 class="stat-title">المجتمعات النشطة</h3>
+                        <span class="stat-icon">🏛️</span>
+                    </div>
+                    <div class="stat-value">27</div>
+                    <div class="stat-change positive">+0%</div>
+                </div>
+            </div>
+
+            <!-- المخططات -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h4 class="chart-title">نمو المستخدمين</h4>
+                        <p class="chart-description">تطور عدد المستخدمين خلال آخر 7 أيام</p>
+                    </div>
+                    <div class="chart-placeholder" id="usersChart">
+                        📈 مخطط نمو المستخدمين
+                    </div>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h4 class="chart-title">توزيع النشاط</h4>
+                        <p class="chart-description">توزيع المنشورات على المحافظات</p>
+                    </div>
+                    <div class="chart-placeholder" id="activityChart">
+                        🎯 مخطط توزيع النشاط
+                    </div>
+                </div>
+            </div>
+
+            <!-- الجداول -->
+            <div class="tables-grid">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h4 class="table-title">أحدث المستخدمين</h4>
+                        <div class="table-actions">
+                            <button class="table-btn" id="viewAllUsers">عرض الكل</button>
+                            <button class="table-btn" id="addUser">إضافة مستخدم</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="admin-table" id="recentUsersTable">
+                            <thead>
+                                <tr>
+                                    <th>المستخدم</th>
+                                    <th>المحافظة</th>
+                                    <th>تاريخ التسجيل</th>
+                                    <th>الحالة</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentUsersBody">
+                                <!-- سيتم تحميل المستخدمين هنا -->
+                                <tr>
+                                    <td colspan="5" style="text-align: center; padding: 40px;">
+                                        <div style="color: #666;">جاري تحميل البيانات...</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="table-card">
+                    <div class="table-header">
+                        <h4 class="table-title">أحدث البلاغات</h4>
+                        <div class="table-actions">
+                            <button class="table-btn" id="viewAllReports">عرض الكل</button>
+                            <button class="table-btn" id="reportsSettings">الإعدادات</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="admin-table" id="recentReportsTable">
+                            <thead>
+                                <tr>
+                                    <th>البلاغ</th>
+                                    <th>النوع</th>
+                                    <th>المبلغ</th>
+                                    <th>التاريخ</th>
+                                    <th>الحالة</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentReportsBody">
+                                <!-- سيتم تحميل البلاغات هنا -->
+                                <tr>
+                                    <td colspan="5" style="text-align: center; padding: 40px;">
+                                        <div style="color: #666;">لا توجد بلاغات جديدة</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- معلومات النظام -->
+            <div class="table-card">
+                <div class="table-header">
+                    <h4 class="table-title">معلومات النظام</h4>
+                    <div class="table-actions">
+                        <button class="table-btn" id="systemHealth">صحة النظام</button>
+                        <button class="table-btn" id="backupBtn">نسخ احتياطي</button>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div>
+                        <h5 style="color: #d4af37; margin-bottom: 10px;">المستخدمون</h5>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #999;">المسجلون:</span>
+                                <span style="color: white;" id="systemUsers">0</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #999;">النشطون اليوم:</span>
+                                <span style="color: white;" id="systemActiveToday">0</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #999;">في انتظار التحقق:</span>
+                                <span style="color: #f1c40f;" id="systemPending">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h5 style="color: #d4af37; margin-bottom: 10px;">المحتوى</h5>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #999;">المنشورات:</span>
+                                <span style="color: white;" id="systemPosts">0</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #999;">التعليقات:</span>
+                                <span style="color: white;" id="systemComments">0</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #999;">الإعلانات:</span>
+                                <span style="color: white;" id="systemAds">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h5 style="color: #d4af37; margin-bottom: 10px;">المالية</h5>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #999;">الإيرادات:</span>
+                                <span style="color: #27ae60;" id="systemRevenue">0 EGP</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #999;">المعلقة:</span>
+                                <span style="color: #f1c40f;" id="systemPendingRevenue">0 EGP</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #999;">المسحوبة:</span>
+                                <span style="color: #ce1126;" id="systemWithdrawn">0 EGP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- الفوتر -->
+    <footer class="admin-footer">
+        <div>
+            <p>© 2023 EgyBook - النظام الإداري الرئيسي | جميع الحقوق محفوظة</p>
+            <div class="footer-links">
+                <a href="#">📜 الشروط والأحكام</a>
+                <a href="#">🔒 سياسة الخصوصية</a>
+                <a href="#">📞 الدعم الفني</a>
+                <a href="#">📚 الوثائق</a>
+            </div>
+            <p style="margin-top: 15px; color: #d4af37; font-weight: bold;">
+                𓂀 نظام مصري 100% - صنع في مصر 𓂀
+            </p>
+        </div>
+    </footer>
+
+    <!-- ملف JavaScript -->
+    <script>
+        // نظام لوحة التحكم
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('👑 تحميل لوحة التحكم الإدارية...');
+            
+            // التحقق من صلاحيات الدخول
+            checkAdminAccess();
+            
+            // تحميل البيانات
+            loadDashboardData();
+            
+            // إعداد الأحداث
+            setupAdminEvents();
+            
+            // تحديث البيانات كل 30 ثانية
+            setInterval(loadDashboardData, 30000);
+        });
+        
+        // التحقق من صلاحيات الدخول
+        function checkAdminAccess() {
+            const currentAdmin = JSON.parse(localStorage.getItem('current_admin'));
+            
+            if (!currentAdmin) {
+                // إذا لم يكن هناك مشرف مسجل، العودة لصفحة الدخول
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // التحقق من أن المستخدم هو مشرف عام
+            if (currentAdmin.role !== 'super_admin') {
+                // إذا كان مشرف محافظة، يذهب للوحة المشرف المحافظة
+                if (currentAdmin.role === 'moderator') {
+                    window.location.href = 'moderator-dashboard.html';
+                    return;
+                }
+                // إذا لم يكن مشرف عام، يعود للدخول
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // عرض بيانات المشرف
+            displayAdminInfo(currentAdmin);
+        }
+        
+        // عرض بيانات المشرف
+        function displayAdminInfo(admin) {
+            document.getElementById('adminName').textContent = admin.name;
+            
+            // صورة رمزية
+            const firstLetter = admin.name.charAt(0);
+            document.getElementById('adminAvatar').textContent = firstLetter;
+        }
+        
+        // تحميل بيانات اللوحة
+        function loadDashboardData() {
+            console.log('📊 جاري تحميل بيانات اللوحة...');
+            
+            // تحميل بيانات النظام
+            loadSystemStats();
+            
+            // تحميل أحدث المستخدمين
+            loadRecentUsers();
+            
+            // تحميل البلاغات
+            loadRecentReports();
+            
+            // تحديث الشارات
+            updateBadges();
+        }
+        
+        // تحميل إحصائيات النظام
+        function loadSystemStats() {
+            const systemData = JSON.parse(localStorage.getItem('egybook_system') || '{}');
+            
+            // المستخدمون
+            const users = systemData.users || [];
+            const totalUsers = users.length;
+            const activeUsers = users.filter(u => u.status === 'active').length;
+            const pendingUsers = users.filter(u => u.status === 'pending').length;
+            const todayUsers = users.filter(u => {
+                const userDate = new Date(u.createdAt);
+                const today = new Date();
+                return userDate.toDateString() === today.toDateString();
+            }).length;
+            
+            // المنشورات
+            const posts = systemData.posts || [];
+            const totalPosts = posts.length;
+            const todayPosts = posts.filter(p => {
+                const postDate = new Date(p.createdAt);
+                const today = new Date();
+                return postDate.toDateString() === today.toDateString();
+            }).length;
+            
+            // الإعلانات
+            const ads = posts.filter(p => p.isSponsored).length;
+            
+            // التعليقات
+            const totalComments = posts.reduce((sum, post) => sum + (post.comments ? post.comments.length : 0), 0);
+            
+            // المالية (محاكاة)
+            const totalRevenue = ads * 50; // 50 جنيه لكل إعلان
+            const pendingRevenue = Math.floor(totalRevenue * 0.3);
+            const withdrawnRevenue = Math.floor(totalRevenue * 0.2);
+            
+            // المشرفون
+            const admins = systemData.admins || [];
+            const activeAdmins = admins.filter(a => a.role === 'moderator').length;
+            
+            // تحديث الإحصائيات
+            document.getElementById('totalUsers').textContent = totalUsers;
+            document.getElementById('totalPosts').textContent = totalPosts;
+            document.getElementById('totalRevenue').textContent = `${totalRevenue} EGP`;
+            
+            document.getElementById('systemUsers').textContent = totalUsers;
+            document.getElementById('systemActiveToday').textContent = todayUsers;
+            document.getElementById('systemPending').textContent = pendingUsers;
+            document.getElementById('systemPosts').textContent = totalPosts;
+            document.getElementById('systemComments').textContent = totalComments;
+            document.getElementById('systemAds').textContent = ads;
+            document.getElementById('systemRevenue').textContent = `${totalRevenue} EGP`;
+            document.getElementById('systemPendingRevenue').textContent = `${pendingRevenue} EGP`;
+            document.getElementById('systemWithdrawn').textContent = `${withdrawnRevenue} EGP`;
+            
+            // الشريط الجانبي
+            document.getElementById('sidebarActiveUsers').textContent = activeUsers;
+            document.getElementById('sidebarTodayPosts').textContent = todayPosts;
+            document.getElementById('sidebarTodayRevenue').textContent = `${Math.floor(totalRevenue / 30)} EGP`;
+            document.getElementById('sidebarActiveAdmins').textContent = activeAdmins;
+            
+            // النسبة المئوية (محاكاة)
+            document.getElementById('usersChange').textContent = `+${Math.floor(todayUsers / totalUsers * 100)}%`;
+            document.getElementById('postsChange').textContent = `+${Math.floor(todayPosts / totalPosts * 100)}%`;
+            document.getElementById('revenueChange').textContent = `+${Math.floor(todayPosts / totalPosts * 100)}%`;
+        }
+        
+        // تحميل أحدث المستخدمين
+        function loadRecentUsers() {
+            const systemData = JSON.parse(localStorage.getItem('egybook_system') || '{}');
+            const users = systemData.users || [];
+            
+            // آخر 5 مستخدمين
+            const recentUsers = users
+                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                .slice(0, 5);
+            
+            const tbody = document.getElementById('recentUsersBody');
+            
+            if (recentUsers.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 40px;">
+                            <div style="color: #666;">لا توجد مستخدمين بعد</div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tbody.innerHTML = recentUsers.map(user => `
+                <tr>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="user-avatar">${user.name.charAt(0)}</div>
+                            <div>
+                                <div style="font-weight: bold;">${user.name}</div>
+                                <div style="font-size: 0.85rem; color: #999;">${user.email}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${user.governorate}</td>
+                    <td>${formatDate(user.createdAt)}</td>
+                    <td>
+                        <span class="status-badge ${getStatusClass(user.status)}">
+                            ${getStatusText(user.status)}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn view" onclick="viewUser(${user.id})">عرض</button>
+                            <button class="action-btn edit" onclick="editUser(${user.id})">تعديل</button>
+                            <button class="action-btn delete" onclick="deleteUser(${user.id})">حذف</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        // تحميل البلاغات
+        function loadRecentReports() {
+            const systemData = JSON.parse(localStorage.getItem('egybook_system') || '{}');
+            const reports = systemData.reports || [];
+            
+            // آخر 5 بلاغات
+            const recentReports = reports
+                .sort((a, b) => new Date(b.reportedAt) - new Date(a.reportedAt))
+                .slice(0, 5);
+            
+            const tbody = document.getElementById('recentReportsBody');
+            
+            if (recentReports.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 40px;">
+                            <div style="color: #666;">لا توجد بلاغات جديدة</div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            tbody.innerHTML = recentReports.map(report => `
+                <tr>
+                    <td>
+                        <div style="font-weight: bold;">${report.reason}</div>
+                        <div style="font-size: 0.85rem; color: #999;">منشور #${report.postId}</div>
+                    </td>
+                    <td>${getReportType(report.reason)}</td>
+                    <td>${report.reporterName}</td>
+                    <td>${formatDate(report.reportedAt)}</td>
+                    <td>
+                        <span class="status-badge ${report.status === 'pending' ? 'status-pending' : 'status-active'}">
+                            ${report.status === 'pending' ? 'قيد المراجعة' : 'تمت المعالجة'}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        // تحديث الشارات
+        function updateBadges() {
+            const systemData = JSON.parse(localStorage.getItem('egybook_system') || '{}');
+            
+            const users = systemData.users || [];
+            const posts = systemData.posts || [];
+            const reports = systemData.reports || [];
+            const ads = posts.filter(p => p.isSponsored).length;
+            
+            document.getElementById('usersBadge').textContent = users.length;
+            document.getElementById('postsBadge').textContent = posts.length;
+            document.getElementById('reportsBadge').textContent = reports.length;
+            document.getElementById('adsBadge').textContent = ads;
+            
+            // الإيرادات
+            const revenue = ads * 50;
+            document.getElementById('revenueBadge').textContent = revenue;
+        }
+        
+        // إعداد الأحداث
+        function setupAdminEvents() {
+            // تسجيل الخروج
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                localStorage.removeItem('current_admin');
+                window.location.href = 'login.html';
+            });
+            
+            // تحديث البيانات
+            document.getElementById('refreshBtn').addEventListener('click', function() {
+                loadDashboardData();
+                showMessage('تم تحديث البيانات بنجاح', 'success');
+            });
+            
+            // التنقل بين الأقسام
+            document.querySelectorAll('.admin-nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.dataset.section;
+                    
+                    // تحديث الروابط النشطة
+                    document.querySelectorAll('.admin-nav a').forEach(a => a.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // عرض القسم المحدد
+                    showSection(section);
+                });
+            });
+        }
+        
+        // عرض القسم
+        function showSection(section) {
+            showMessage(`جاري تحميل قسم ${section}...`, 'info');
+        }
+        
+        // عرض رسالة
+        function showMessage(text, type) {
+            // إنشاء رسالة عائمة
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `admin-message`;
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 100px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: ${type === 'success' ? 'rgba(39,174,96,0.9)' : 
+                            type === 'error' ? 'rgba(206,17,38,0.9)' : 
+                            'rgba(30,58,138,0.9)'};
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                min-width: 300px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                animation: slideDown 0.3s ease;
+            `;
+            
+            messageDiv.innerHTML = `
+                <span>${text}</span>
+                <button onclick="this.parentElement.remove()" style="background: none; border: none; color: white; font-size: 20px; cursor: pointer;">✕</button>
+            `;
+            
+            document.body.appendChild(messageDiv);
+            
+            // إزالة الرسالة بعد 5 ثوان
+            setTimeout(() => {
+                if (messageDiv.parentElement) {
+                    messageDiv.remove();
+                }
+            }, 5000);
+        }
+        
+        // دوال مساعدة
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ar-EG');
+        }
+        
+        function getStatusClass(status) {
+            switch(status) {
+                case 'active': return 'status-active';
+                case 'pending': return 'status-pending';
+                case 'banned': return 'status-banned';
+                default: return 'status-pending';
+            }
+        }
+        
+        function getStatusText(status) {
+            switch(status) {
+                case 'active': return 'نشط';
+                case 'pending': return 'قيد المراجعة';
+                case 'banned': return 'محظور';
+                default: return 'غير معروف';
+            }
+        }
+        
+        function getReportType(reason) {
+            if (reason.includes('إساءة')) return 'إساءة';
+            if (reason.includes('محتوى')) return 'محتوى';
+            if (reason.includes('احتيال')) return 'احتيال';
+            return 'أخرى';
+        }
+        
+        // دوال الإجراءات
+        function viewUser(userId) {
+            showMessage(`عرض بيانات المستخدم ${userId}...`, 'info');
+        }
+        
+        function editUser(userId) {
+            showMessage(`تعديل بيانات المستخدم ${userId}...`, 'info');
+        }
+        
+        function deleteUser(userId) {
+            if (confirm('هل أنت متأكد من حذف هذا المستخدم؟')) {
+                showMessage(`جاري حذف المستخدم ${userId}...`, 'info');
+            }
+        }
+        
+        // إضافة أنماط للرسائل
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideDown {
+                from {
+                    transform: translate(-50%, -100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translate(-50%, 0);
+                    opacity: 1;
+                }
+            }
+            
+            .badge {
+                background: #ce1126;
+                color: white;
+                padding: 3px 8px;
+                border-radius: 10px;
+                font-size: 0.8rem;
+                margin-right: auto;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
